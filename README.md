@@ -2,4 +2,4 @@
 
 - Ime: Karlo
 - Prezime: Borovčak
-- Email: [karlo.borovcak@fer.hr]
+- Email: karlo.borovcak@fer.hr
