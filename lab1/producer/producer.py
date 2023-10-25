@@ -4,8 +4,8 @@ from azure.eventhub import EventData
 from azure.eventhub.aio import EventHubProducerClient
 from reddit_api import get_data
 
-EVENT_HUB_CONNECTION_STR = ""
-EVENT_HUB_NAME = ""
+EVENT_HUB_CONNECTION_STR = "Endpoint=sb://ns-lab1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=uGupt1A2qiM1uljE6IvljLwXgjDuB3Zgs+AEhF7fMYE="
+EVENT_HUB_NAME = "eh-lab1"
 
 async def run():
     data = get_data()
