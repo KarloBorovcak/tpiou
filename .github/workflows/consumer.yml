@@ -1,0 +1,79 @@
+name: Consumer build image and deploy
+
+on:
+  push:
+    branches: [ "main" ]
+    paths: 
+      - 'lab1/consumer/*.py'
+  pull_request:
+    branches: [ "main" ]
+    paths: 
+      - 'lab1/consumer/*.py'
+
+jobs:
+
+  editorconfig:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: EditorConfig Check
+        uses: sds/actions/editorconfig-checker@v1
+
+  linter:
+    runs-on: ubuntu-latest
+    env:
+      EVENT_HUB_CONNECTION_STR: ${{ secrets.EVENT_HUB_CONNECTION_STR }}
+      EVENT_HUB_NAME: ${{ secrets.EVENT_HUB_NAME }}
+      REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+      REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
+      REDDIT_SECRET_KEY: ${{ secrets.REDDIT_SECRET_KEY }}
+      REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          pip install -r consumer/requirements.txt
+        working-directory: consumer
+      - name: Run Linter
+        run: |
+          pylint consumer
+        working-directory: consumer
+          
+
+  azure_and_docker:
+    needs: [editorconfig, linter]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Build Docker Image
+        run: |
+          docker build -t consumer:latest -f consumer/Dockerfile .
+        working-directory: consumer
+      - name: Push Docker Image to ACR
+        run: |
+          docker tag consumer:latest tpioucontainerregistry.azurecr.io/consumer:latest
+          docker push tpioucontainerregistry.azurecr.io/consumer:latest
+      - name: Build and deploy Container App
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}
+          acrName: tpioucontainerregistry
+          dockerfilePath: /lab1/consumer/Dockerfile
+          containerAppName: consumer
+          resourceGroup: fervjestina
+          imageToBuild: consumer:latest
+          environmentVariables: |
+            EVENT_HUB_CONNECTION_STR=${{ secrets.EVENT_HUB_CONNECTION_STR }}
+            EVENT_HUB_NAME=${{ secrets.EVENT_HUB_NAME }}
+            REDDIT_CLIENT_ID=${{ secrets.REDDIT_CLIENT_ID }}
+            REDDIT_PASSWORD=${{ secrets.REDDIT_PASSWORD }}
+            REDDIT_SECRET_KEY=${{ secrets.REDDIT_SECRET_KEY }}
+            REDDIT_USERNAME=${{ secrets.REDDIT_USERNAME }}
