@@ -1,7 +1,6 @@
 from azure.eventhub import EventHubConsumerClient
 import os
 
-# VARS
 EVENT_HUB_CONNECTION_STR = os.getenv("EVENT_HUB_CONNECTION_STR")
 EVENT_HUB_NAME = os.getenv("EVENT_HUB_NAME")
 CONSUMER_GROUP = "$Default"
