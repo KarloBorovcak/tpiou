@@ -13,13 +13,12 @@ on:
 jobs:
 
   editorconfig:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: EditorConfig Check
-        uses: sds/actions/editorconfig-checker@v1
-
+      - uses: actions/checkout@v2
+      - uses: editorconfig-checker/action-editorconfig-checker@main
+      - run: editorconfig-checker
+      
   linter:
     runs-on: ubuntu-latest
     env:
@@ -32,7 +31,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       - name: Install dependencies
         run: |
           pip install -r consumer/requirements.txt
@@ -44,11 +43,10 @@ jobs:
           
 
   azure_and_docker:
-    needs: [editorconfig, linter]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       - name: Azure Login
         uses: azure/login@v1
         with:
