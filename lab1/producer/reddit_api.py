@@ -1,15 +1,13 @@
 import requests
-import json
+import os
 
 ENDPOINT = 'https://oauth.reddit.com'
 PATH = '/r/dataengineering/top'
 
-with open('reddit_cred.json', 'r') as f:
-    credentials = json.load(f)
-    CLIENT_ID = credentials['client_id']
-    SECRET_KEY = credentials['secret_key']
-    username = credentials['username']
-    password = credentials['password']
+CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
+SECRET_KEY = os.getenv("REDDIT_SECRET_KEY")
+username = os.getenv("REDDIT_USERNAME")
+password = os.getenv("REDDIT_PASSWORD")
 
 def get_data():
     auth = requests.auth.HTTPBasicAuth(CLIENT_ID, SECRET_KEY)

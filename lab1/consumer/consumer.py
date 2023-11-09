@@ -1,7 +1,8 @@
 from azure.eventhub import EventHubConsumerClient
+import os
 
-EVENT_HUB_CONNECTION_STR = "Endpoint=sb://ns-lab1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=uGupt1A2qiM1uljE6IvljLwXgjDuB3Zgs+AEhF7fMYE="
-EVENT_HUB_NAME = "eh-lab1"
+EVENT_HUB_CONNECTION_STR = os.getenv("EVENT_HUB_CONNECTION_STR")
+EVENT_HUB_NAME = os.getenv("EVENT_HUB_NAME")
 CONSUMER_GROUP = "$Default"
 
 def on_event(partition_context, event):
