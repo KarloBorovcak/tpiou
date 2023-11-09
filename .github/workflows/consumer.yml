@@ -54,9 +54,9 @@ jobs:
       - name: Build and deploy Container App
         uses: azure/container-apps-deploy-action@v1
         with:
-          appSourcePath: lab1/consumer/
+          appSourcePath: ${{ github.workspace }}/lab1/consumer/
           acrName: tpioucontainerregistry
-          dockerfilePath: lab1/consumer/Dockerfile
+          dockerfilePath: Dockerfile
           containerAppName: consumer
           resourceGroup: fervjestina
           imageToBuild: consumer:latest
