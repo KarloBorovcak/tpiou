@@ -51,14 +51,6 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Build Docker Image
-        run: |
-          docker build -t consumer:latest -f consumer/Dockerfile .
-        working-directory: consumer
-      - name: Push Docker Image to ACR
-        run: |
-          docker tag consumer:latest tpioucontainerregistry.azurecr.io/consumer:latest
-          docker push tpioucontainerregistry.azurecr.io/consumer:latest
       - name: Build and deploy Container App
         uses: azure/container-apps-deploy-action@v1
         with:
