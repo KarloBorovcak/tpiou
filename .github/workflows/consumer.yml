@@ -36,11 +36,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-        working-directory: /lab1/consumer
+        working-directory: lab1/consumer
       - name: Run Linter
         run: |
           pylint consumer
-        working-directory: /lab1/consumer
+        working-directory: lab1/consumer
           
 
   azure_and_docker:
@@ -60,5 +60,4 @@ jobs:
           dockerfilePath: Dockerfile
           containerAppName: consumer-lab1
           resourceGroup: fervjestina
-          imageToBuild: tpioucontainerregistry.azurecr.io/consumer-lab1:latest2
-          environmentVariables: EVENT_HUB_CONNECTION_STR=${{ secrets.EVENT_HUB_CONNECTION_STR }} EVENT_HUB_NAME=${{ secrets.EVENT_HUB_NAME }} REDDIT_CLIENT_ID=${{ secrets.REDDIT_CLIENT_ID }} REDDIT_PASSWORD=${{ secrets.REDDIT_PASSWORD }} REDDIT_SECRET_KEY=${{ secrets.REDDIT_SECRET_KEY }} REDDIT_USERNAME=${{ secrets.REDDIT_USERNAME }}
+          imageToBuild: tpioucontainerregistry.azurecr.io/consumer-lab1:latest
