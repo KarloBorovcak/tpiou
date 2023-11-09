@@ -28,9 +28,7 @@ def get_data():
 # Check API response
 # if res.status_code == 200:
 #     data = res.json()
-    
 #     for post in data['data']['children']:
 #         print(post['data']['title'])
 # else:
-    
 #     print(f"Error: {res.status_code}")

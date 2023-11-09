@@ -21,8 +21,6 @@ def receive():
             client.receive(on_event=on_event)
     except KeyboardInterrupt:
         print('Stopped receiving.')
-    
 
 if __name__ == '__main__':
     receive()
-    

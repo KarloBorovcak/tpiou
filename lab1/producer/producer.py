@@ -10,7 +10,6 @@ EVENT_HUB_NAME = os.getenv("EVENT_HUB_NAME")
 
 async def run():
     data = get_data()
-    
     # Create a producer client to send messages to the event hub.
     # Specify a connection string to your event hubs namespace and
     # the event hub name.
@@ -33,4 +32,3 @@ if __name__ == '__main__':
     asyncio.run(run())
     while True:
         pass
-    
