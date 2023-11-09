@@ -9,6 +9,7 @@ on:
     branches: [ "main" ]
     paths: 
       - 'lab1/consumer/*.py'
+  workflow_dispatch:
 
 jobs:
 
@@ -60,10 +61,4 @@ jobs:
           containerAppName: consumer-lab1
           resourceGroup: fervjestina
           imageToBuild: tpioucontainerregistry.azurecr.io/consumer-lab1:latest
-          environmentVariables: |
-            EVENT_HUB_CONNECTION_STR=${{ secrets.EVENT_HUB_CONNECTION_STR }}
-            EVENT_HUB_NAME=${{ secrets.EVENT_HUB_NAME }}
-            REDDIT_CLIENT_ID=${{ secrets.REDDIT_CLIENT_ID }}
-            REDDIT_PASSWORD=${{ secrets.REDDIT_PASSWORD }}
-            REDDIT_SECRET_KEY=${{ secrets.REDDIT_SECRET_KEY }}
-            REDDIT_USERNAME=${{ secrets.REDDIT_USERNAME }}
+          environmentVariables: EVENT_HUB_CONNECTION_STR=${{ secrets.EVENT_HUB_CONNECTION_STR }} EVENT_HUB_NAME=${{ secrets.EVENT_HUB_NAME }} REDDIT_CLIENT_ID=${{ secrets.REDDIT_CLIENT_ID }} REDDIT_PASSWORD=${{ secrets.REDDIT_PASSWORD }} REDDIT_SECRET_KEY=${{ secrets.REDDIT_SECRET_KEY }} REDDIT_USERNAME=${{ secrets.REDDIT_USERNAME }}
