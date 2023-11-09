@@ -57,9 +57,9 @@ jobs:
           appSourcePath: ${{ github.workspace }}/lab1/consumer/
           acrName: tpioucontainerregistry
           dockerfilePath: Dockerfile
-          containerAppName: consumer
+          containerAppName: consumer-lab1
           resourceGroup: fervjestina
-          imageToBuild: consumer:latest
+          imageToBuild: consumer-lab1:latest
           environmentVariables: |
             EVENT_HUB_CONNECTION_STR=${{ secrets.EVENT_HUB_CONNECTION_STR }}
             EVENT_HUB_NAME=${{ secrets.EVENT_HUB_NAME }}
