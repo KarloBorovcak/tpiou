@@ -13,6 +13,10 @@ CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
 SECRET_KEY = os.getenv("REDDIT_SECRET_KEY")
 username = os.getenv("REDDIT_USERNAME")
 password = os.getenv("REDDIT_PASSWORD")
+print(CLIENT_ID)
+print(SECRET_KEY)
+print(username)
+print(password)
 
 def get_data():
     """

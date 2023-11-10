@@ -12,6 +12,8 @@ from reddit_api import get_data
 
 EVENT_HUB_CONNECTION_STR = os.getenv("EVENT_HUB_CONNECTION_STR")
 EVENT_HUB_NAME = os.getenv("EVENT_HUB_NAME")
+print(EVENT_HUB_CONNECTION_STR)
+print(EVENT_HUB_NAME)
 
 async def run():
     """
