@@ -1,11 +1,13 @@
-from azure.eventhub import EventHubConsumerClient
 import os
+from azure.eventhub import EventHubConsumerClient
 
 EVENT_HUB_CONNECTION_STR = os.getenv("EVENT_HUB_CONNECTION_STR")
 EVENT_HUB_NAME = os.getenv("EVENT_HUB_NAME")
 CONSUMER_GROUP = "$Default"
 
 def on_event(partition_context, event):
+    context = partition_context
+    print("Received event from partition: {}".format(context.partition_id))
     print(event.body_as_str(encoding='UTF-8'))
 
 def receive():
