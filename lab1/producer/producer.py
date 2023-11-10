@@ -41,7 +41,7 @@ async def run():
 
 if __name__ == '__main__':
     """
-    Run the asynchronous 'run' function using asyncio.run().
+    Run the asynchronous 'run()' function using asyncio.run().
     """
     asyncio.run(run())
 
