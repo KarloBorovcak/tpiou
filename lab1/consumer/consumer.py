@@ -1,3 +1,6 @@
+"""
+This module contains code for receiving events from Azure Event Hub using the EventHubConsumerClient.
+"""
 import os
 from azure.eventhub import EventHubConsumerClient
 
