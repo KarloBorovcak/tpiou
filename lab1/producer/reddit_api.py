@@ -1,5 +1,10 @@
-import requests
+"""
+This module contains code for interacting 
+with the Reddit API to retrieve top posts
+from the 'dataengineering' subreddit using OAuth2 authentication.
+"""
 import os
+import requests
 
 ENDPOINT = 'https://oauth.reddit.com'
 PATH = '/r/dataengineering/top'
@@ -10,6 +15,12 @@ username = os.getenv("REDDIT_USERNAME")
 password = os.getenv("REDDIT_PASSWORD")
 
 def get_data():
+    """
+    Retrieves top posts from the 'dataengineering' subreddit using OAuth2 authentication.
+
+    Returns:
+        dict: The JSON response containing the top posts data.
+    """
     auth = requests.auth.HTTPBasicAuth(CLIENT_ID, SECRET_KEY)
     data = {
         'grant_type': 'password',
@@ -24,11 +35,3 @@ def get_data():
 
     res = requests.get(ENDPOINT + PATH, headers=headers, params={'t': 'all', 'limit': 10})
     return res.json()
-
-# Check API response
-# if res.status_code == 200:
-#     data = res.json()
-#     for post in data['data']['children']:
-#         print(post['data']['title'])
-# else:
-#     print(f"Error: {res.status_code}")

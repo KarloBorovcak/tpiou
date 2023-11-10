@@ -1,21 +1,32 @@
+"""
+This module contains code for asynchronously 
+retrieving data from the Reddit API
+and sending it to an Azure Event Hub using the EventHubProducerClient.
+"""
+import os
 import asyncio
 import json
 from azure.eventhub import EventData
 from azure.eventhub.aio import EventHubProducerClient
 from reddit_api import get_data
-import os
 
 EVENT_HUB_CONNECTION_STR = os.getenv("EVENT_HUB_CONNECTION_STR")
 EVENT_HUB_NAME = os.getenv("EVENT_HUB_NAME")
 
 async def run():
+    """
+    Asynchronously retrieves data from the Reddit API, creates an EventHubProducerClient,
+    creates a batch of events from the Reddit data, and sends the batch to the Azure Event Hub.
+    """
     data = get_data()
+
     # Create a producer client to send messages to the event hub.
     # Specify a connection string to your event hubs namespace and
     # the event hub name.
     producer = EventHubProducerClient.from_connection_string(
         conn_str=EVENT_HUB_CONNECTION_STR, eventhub_name=EVENT_HUB_NAME
     )
+
     async with producer:
         # Create a batch.
         event_data_batch = await producer.create_batch()
@@ -29,6 +40,11 @@ async def run():
 
 
 if __name__ == '__main__':
+    """
+    Run the asynchronous 'run' function using asyncio.run().
+    """
     asyncio.run(run())
+
+    # Infinite loop to keep the program running.
     while True:
         pass
