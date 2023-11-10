@@ -1,5 +1,5 @@
 """
-This module contains code for interacting 
+This module contains code for interacting
 with the Reddit API to retrieve top posts
 from the 'dataengineering' subreddit using OAuth2 authentication.
 """

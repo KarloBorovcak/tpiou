@@ -1,5 +1,5 @@
 """
-This module contains code for asynchronously 
+This module contains code for asynchronously
 retrieving data from the Reddit API
 and sending it to an Azure Event Hub using the EventHubProducerClient.
 """
