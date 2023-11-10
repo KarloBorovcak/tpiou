@@ -1,0 +1,66 @@
+name: Producer build image and deploy
+
+on:
+  push:
+    branches: [ "main" ]
+    paths: 
+      - 'lab1/producer/*.py'
+  pull_request:
+    branches: [ "main" ]
+    paths: 
+      - 'lab1/producer/*.py'
+
+jobs:
+
+  editorconfig:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: editorconfig-checker/action-editorconfig-checker@main
+      - run: editorconfig-checker
+      
+  linter:
+    runs-on: ubuntu-latest
+    env:
+      EVENT_HUB_CONNECTION_STR: ${{ secrets.EVENT_HUB_CONNECTION_STR }}
+      EVENT_HUB_NAME: ${{ secrets.EVENT_HUB_NAME }}
+      REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+      REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
+      REDDIT_SECRET_KEY: ${{ secrets.REDDIT_SECRET_KEY }}
+      REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pylint
+        working-directory: lab1/producer
+      - name: Run Linter
+        run: |
+          pylint .
+        working-directory: lab1/producer
+          
+
+  azure_and_docker:
+    needs: ["editorconfig", "linter"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Build and deploy Container App
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/lab1/producer/
+          acrName: tpioucontainerregistry
+          imageToBuild: tpioucontainerregistry.azurecr.io/producer-lab1:latest
+          dockerfilePath: Dockerfile
+          containerAppName: producer
+          containerAppEnvironment: fervjestina
+          resourceGroup: fervjestina
+          environmentVariables: EVENT_HUB_CONNECTION_STR='${{ secrets.EVENT_HUB_CONNECTION_STR }}' EVENT_HUB_NAME='${{ secrets.EVENT_HUB_NAME }}' REDDIT_CLIENT_ID='${{ secrets.REDDIT_CLIENT_ID }}' REDDIT_PASSWORD='${{ secrets.REDDIT_PASSWORD }}' REDDIT_SECRET_KEY='${{ secrets.REDDIT_SECRET_KEY }}' REDDIT_USERNAME='${{ secrets.REDDIT_USERNAME }}'
