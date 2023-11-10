@@ -60,4 +60,5 @@ jobs:
           acrName: tpioucontainerregistry
           imageToBuild: tpioucontainerregistry.azurecr.io/consumer:latest
           dockerfilePath: Dockerfile
+          resourceGroup: fervjestina
           
