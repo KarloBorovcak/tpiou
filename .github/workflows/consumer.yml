@@ -58,10 +58,11 @@ jobs:
         with:
           appSourcePath: ${{ github.workspace }}/lab1/consumer/
           acrName: tpioucontainerregistry
+          imageToBuild: tpioucontainerregistry.azurecr.io/consumer:latest
           dockerfilePath: Dockerfile
+          imageToDeploy: tpioucontainerregistry.azurecr.io/consumer:latest
           containerAppName: consumer-lab1
           containerAppEnvironment: fervjestina
           resourceGroup: fervjestina
-          imageToBuild: tpioucontainerregistry.azurecr.io/consumer:latest
           environmentVariables: EVENT_HUB_CONNECTION_STR=${{ secrets.EVENT_HUB_CONNECTION_STR }} EVENT_HUB_NAME=${{ secrets.EVENT_HUB_NAME }} REDDIT_CLIENT_ID=${{ secrets.REDDIT_CLIENT_ID }} REDDIT_PASSWORD=${{ secrets.REDDIT_PASSWORD }} REDDIT_SECRET_KEY=${{ secrets.REDDIT_SECRET_KEY }} REDDIT_USERNAME=${{ secrets.REDDIT_USERNAME }}
           
