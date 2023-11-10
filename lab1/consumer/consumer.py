@@ -25,7 +25,7 @@ def receive():
     """
     Start receiving events from the Event Hub.
     """
-    # Create a consumer client for the event hub.
+    # Consumer client for the event hub.
     client = EventHubConsumerClient.from_connection_string(
         conn_str=EVENT_HUB_CONNECTION_STR,
         consumer_group=CONSUMER_GROUP,
