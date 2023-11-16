@@ -1,0 +1,21 @@
+{
+    "Name": "EventHub1",
+    "Type": "Data Stream",
+    "DataSourceType": "Event Hub",
+    "EventHubProperties": {
+        "ServiceBusNamespace": "ns-lab1",
+        "EventHubName": "eh-lab1",
+        "SharedAccessPolicyName": "RootManageSharedAccessKey",
+        "SharedAccessPolicyKey": "********",
+        "ConsumerGroupName": "$Default",
+        "AuthenticationMode": "ConnectionString"
+    },
+    "DataSourceCredentialDomain": "1c17b573-5736-4a05-b5e9-54fc17844f4a.StreamAnalystics",
+    "Serialization": {
+        "Type": "Json",
+        "Encoding": "UTF8"
+    },
+    "PartitionKey": null,
+    "CompressionType": "None",
+    "ScriptType": "Input"
+}

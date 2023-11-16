@@ -1,0 +1,26 @@
+{
+    "Name": "DataLakeStorageGen2BlobStorage1",
+    "DataSourceType": "Blob Storage",
+    "BlobStorageProperties": {
+        "StorageAccounts": [
+            {
+                "AccountName": "storageaccountlab2karlo",
+                "AccountKey": "********"
+            }
+        ],
+        "Container": "asa",
+        "PathPattern": "{datetime:M}/{datetime:dd}/{datetime:HH}/{datetime:mm}",
+        "DateFormat": "yyyy/MM/dd",
+        "TimeFormat": "HH",
+        "AuthenticationMode": "ConnectionString"
+    },
+    "DataSourceCredentialDomain": "1d717d24-8ef9-477e-b1eb-89be8596725d.StreamAnalystics",
+    "Serialization": {
+        "Type": "Json",
+        "Encoding": "UTF8",
+        "Format": "LineSeparated"
+    },
+    "MinimumRows": null,
+    "MaximumTime": null,
+    "ScriptType": "Output"
+}
