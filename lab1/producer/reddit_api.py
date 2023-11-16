@@ -20,7 +20,7 @@ def get_access():
         'username': username,
         'password': password
     }
-    headers = {'User-Agent': 'MyAPI/0.0.2'}
+    headers = {'User-Agent': 'MyAPI/0.0.3'}
     res = requests.post('https://www.reddit.com/api/v1/access_token',
                         auth=auth, data=data, headers=headers)
     TOKEN = res.json()['access_token']

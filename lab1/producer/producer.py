@@ -52,6 +52,7 @@ async def run():
             await producer.send_batch(event_data_batch)
 
         after = data['data']['after']
+        await asyncio.sleep(10)
 
 
 if __name__ == '__main__':
