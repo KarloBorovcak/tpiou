@@ -3,11 +3,51 @@ This module contains code for receiving events from Azure Event Hub
 using the EventHubConsumerClient.
 """
 import os
+import json
+from datetime import datetime
 from azure.eventhub import EventHubConsumerClient
+from azure.storage.filedatalake import DataLakeServiceClient
 
+# Event Hub connection string and name.
 EVENT_HUB_CONNECTION_STR = os.getenv("EVENT_HUB_CONNECTION_STR")
 EVENT_HUB_NAME = os.getenv("EVENT_HUB_NAME")
 CONSUMER_GROUP = "$Default"
+
+# Azure Data Lake Storage connection string and name.
+STORAGE_ACCOUNT_NAME = os.getenv("STORAGE_ACCOUNT_NAME")
+STORAGE_ACCOUNT_CONNECTION_STR = os.getenv("STORAGE_ACCOUNT_CONNECTION_STR")
+FILE_SYSTEM_NAME = "redditdata"
+
+def save_to_datalake(data, formatted_date):
+    """
+    Saves the data to Azure Data Lake Storage.
+    """
+    # Create a DataLakeServiceClient object.
+    service_client = DataLakeServiceClient.from_connection_string(
+        conn_str=STORAGE_ACCOUNT_CONNECTION_STR
+    )
+
+    # Get a reference to a file system.
+    file_system_client = service_client.get_file_system_client(file_system=FILE_SYSTEM_NAME)
+
+    # Get a reference to a directory.
+    directory_client = file_system_client.get_directory_client(formatted_date)
+
+    # Create the directory if it doesn't exist.
+    directory_client.create_directory()
+
+    # Get a reference to a file.
+    file_client = directory_client.get_file_client(f"{data['id']}.json")
+
+    # Create the file if it doesn't exist.
+    file_client.create_file()
+
+    # Append data to the file.
+    file_client.append_data(json.dumps(data), offset=0, length=len(json.dumps(data)))
+
+    # Flush data to the file.
+    file_client.flush_data(len(json.dumps(data)))
+
 
 def on_event(partition_context, event):
     """
@@ -19,7 +59,12 @@ def on_event(partition_context, event):
     """
     context = partition_context
     print(f"Received event from partition: {context.partition_id}")
-    print(event.body_as_str(encoding='UTF-8'))
+
+    data = json.loads(event.body_as_str(encoding='UTF-8'))
+    created_utc = datetime.fromtimestamp(data['created_utc'])
+    formatted_date = created_utc.strftime('%Y/%m/%d/%H/%M')
+
+    save_to_datalake(data, formatted_date)
 
 def receive():
     """
