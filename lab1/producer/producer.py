@@ -24,7 +24,7 @@ async def run():
     headers = get_access()
     after = None
 
-    for i in range(100):	
+    for i in range(100):
         # Send a GET request to the Reddit API to retrieve the top posts from the past month.
         params = {'t': 'all', 'limit': 10, 'after': after}
         res = requests.get(f'{ENDPOINT}{PATH}', headers=headers, params=params)
@@ -50,7 +50,7 @@ async def run():
 
             # Send the batch of events to the event hub.
             await producer.send_batch(event_data_batch)
-        
+
         after = data['data']['after']
 
 

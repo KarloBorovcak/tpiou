@@ -1,6 +1,6 @@
 """
 This module contains code for receiving events from Azure Event Hub
-using the EventHubConsumerClient.
+using the EventHubConsumerClient. Save the data to Azure Data Lake Storage.
 """
 import os
 import json
