@@ -62,7 +62,7 @@ if __name__ == '__main__':
     print('Sending data to Azure Event Hub...')
     asyncio.run(run())
     print('Done sending data to Azure Event Hub.')
-    
+
     # Infinite loop to keep the program running.
     while True:
         pass
