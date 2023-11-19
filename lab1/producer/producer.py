@@ -34,8 +34,6 @@ async def run():
             break
 
         # Create a producer client to send messages to the event hub.
-        # Specify a connection string to your event hubs namespace and
-        # the event hub name.
         producer = EventHubProducerClient.from_connection_string(
             conn_str=EVENT_HUB_CONNECTION_STR, eventhub_name=EVENT_HUB_NAME
         )

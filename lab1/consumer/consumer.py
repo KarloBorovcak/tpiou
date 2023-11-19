@@ -20,7 +20,7 @@ FILE_SYSTEM_NAME = "redditdata"
 
 def save_to_datalake(data, formatted_date):
     """
-    Saves the data to Azure Data Lake Storage.
+    Saves the data to Azure Data Lake Storage 2.
     """
     # Create a DataLakeServiceClient object.
     service_client = DataLakeServiceClient.from_connection_string(
